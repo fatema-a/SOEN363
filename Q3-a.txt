@@ -1,0 +1,7 @@
+Select title
+from movies
+where mid in (select mid
+              from actors
+              where name = 'Daniel Craig')
+group by title
+order by title asc

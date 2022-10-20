@@ -12,8 +12,7 @@ CREATE TABLE actors(
   mid INT REFERENCES movies(mid),
   name VARCHAR,
   cast_position INT,
-  PRIMARY KEY(mid,name),
-  UNIQUE(mid,cast_position)
+  PRIMARY KEY(mid,name)
 );
  
  CREATE TABLE genres(

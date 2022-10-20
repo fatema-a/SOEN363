@@ -5,3 +5,5 @@ where mid in (select mid
               where name = 'Daniel Craig')
 group by title
 order by title asc
+
+execution time 386ms

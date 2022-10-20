@@ -1,0 +1,6 @@
+create or replace view non_existent as
+    select all_combinations.name, all_combinations.mid
+    from all_combinations
+    except (select name, mid from actors);
+
+select count(*) from non_existent;

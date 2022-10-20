@@ -1,0 +1,5 @@
+create or replace view all_combinations as
+    select *
+    from co_actors, (select mid from actors where name like 'Annette Nicole') as am;
+
+select count(*) from all_combinations;

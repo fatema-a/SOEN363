@@ -1,0 +1,10 @@
+CREATE VIEW longevity AS
+(SELECT name, (MAX(year)-MIN(year)) AS diff
+FROM movies, actors
+WHERE movies.mid = actors.mid
+GROUP BY name
+);
+
+SELECT longevity.name
+FROM longevity 
+WHERE longevity.diff >= ALL(SELECT longevity.diff FROM longevity);

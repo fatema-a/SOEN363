@@ -1,0 +1,7 @@
+create or replace view co_actors as
+    select distinct name
+    from actors
+    where mid in (select mid from actors where name like 'Annette Nicole')
+      and name not like 'Annette Nicole';
+
+select count(*) from co_actors;

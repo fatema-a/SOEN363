@@ -1,0 +1,48 @@
+
+select mid, name, cast_position
+from actors
+group by mid, name, cast_position
+having count(*) > 1;
+
+
+select title, year, rating, num_ratings
+from movies
+group by title, year, rating, num_ratings
+having count(*) > 1;
+
+select * from movies
+where title = 'Toy story';
+
+select tid, tag
+from tag_names
+group by tid, tag
+having count(*) > 1;
+
+select mid,tid
+from tags
+group by mid,tid
+having count(*) > 1;
+
+select mid, genre
+from genres
+group by mid,genre
+having count(*) > 1;
+
+-- Only movies has duplicates in the table
+
+
+select title, year, rating, num_ratings from movies
+except(
+select title, year, rating, num_ratings from movies
+group by title, year, rating, num_ratings
+having count(*) > 1)
+create view distinct_movies as
+select * from movies
+except(
+select * from movies
+where mid in (
+	select mid from movies
+	except select min(mid) from movies
+	group by title, year, rating, num_ratings)
+	)
+order by mid;

@@ -11,7 +11,7 @@ select m2.mid, count(distinct a1.name) as ca
 from movies m1, movies m2, actors a1, actors a2
 where m1.title = 'Mr. & Mrs. Smith' and m2.title <> 'Mr. & Mrs. Smith' and a1.name = a2.name
 and a1.mid = m1.mid and a2.mid = m2.mid
-group by m2.mid
+group by m2.mid;
 
 create view no_common_actors as
 select m.mid, 0 as ca

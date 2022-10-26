@@ -93,6 +93,7 @@ from movies m, movie_fractions mf
 where m.mid = mf.mid
 order by similarity desc limit 10;
 
+--Total query runtime: 400 msec.
 
 
 

@@ -1,0 +1,96 @@
+create materialized view mat_smith_movie_stats as
+select count(distinct a.name) as smith_actors, count(distinct t.tid) as smith_tags, count(distinct g.genre) as smith_genres,
+m.year as smith_year, m.rating as smith_rating
+from actors a, movies m, tags t,genres g
+where a.mid = m.mid and m.title = 'Mr. & Mrs. Smith' and g.mid = m.mid and t.mid = m.mid
+group by year,rating;
+
+
+create materialized view mat_common_actors AS
+select m2.mid, count(distinct a1.name) as ca
+from movies m1, movies m2, actors a1, actors a2
+where m1.title = 'Mr. & Mrs. Smith' and m2.title <> 'Mr. & Mrs. Smith' and a1.name = a2.name
+and a1.mid = m1.mid and a2.mid = m2.mid
+group by m2.mid;
+
+create materialized view mat_no_common_actors as
+select m.mid, 0 as ca
+from movies m
+where m.title <> 'Mr. & Mrs. Smith' and m.mid not in (select m1.mid from mat_common_actors m1);
+
+create materialized view mat_all_common_actors as
+select * from mat_common_actors
+union
+select * from mat_no_common_actors
+order by mid;
+
+
+create materialized view mat_common_genres as
+select m2.mid, count(distinct g1.genre) as cgenres
+from movies m1, movies m2, genres g1, genres g2
+where m1.title = 'Mr. & Mrs. Smith' and m2.title <> 'Mr. & Mrs. Smith' and g1.genre = g2.genre
+and g1.mid = m1.mid and g2.mid = m2.mid
+group by m2.mid;
+
+create materialized view mat_no_common_genres as
+select m.mid, 0 as cgenres
+from movies m
+where m.title <> 'Mr. & Mrs. Smith' and m.mid not in (select m1.mid from mat_common_genres m1);
+
+
+create materialized view mat_all_common_genres AS
+select * from mat_common_genres
+union
+select * from mat_no_common_genres
+order by mid;
+
+
+create materialized view mat_common_tags as
+select m2.mid, count(distinct t1.tid) as ctags
+from movies m1, movies m2, tags t1, tags t2
+where m1.title = 'Mr. & Mrs. Smith' and m2.title <> 'Mr. & Mrs. Smith' and t1.tid = t2.tid
+and t1.mid = m1.mid and t2.mid = m2.mid
+group by m2.mid;
+
+
+create materialized view mat_no_common_tags as 
+select m.mid, 0 as ctags
+from movies m
+where m.title <> 'Mr. & Mrs. Smith' and m.mid not in (select m1.mid from mat_common_tags m1);
+
+create materialized view mat_all_common_tags as
+select * from mat_common_tags
+union
+select * from mat_no_common_tags
+order by mid;
+
+
+create materialized view mat_actor_fraction as
+select m.mid,(cast(cactors.ca as float)/sm.smith_actors) actor_ratio
+from movies m, mat_all_common_actors cactors, mat_smith_movie_stats sm
+where m.mid = cactors.mid;
+
+
+create materialized view mat_tag_fraction as
+select m.mid, (cast(ctags as float)/smith_tags) tag_ratio
+from movies m, mat_smith_movie_stats, mat_all_common_tags c
+where m.mid = c.mid;
+
+create materialized view mat_genre_fraction as
+select m.mid, (cast(cgenres as float)/smith_genres) genre_ratio
+from movies m, mat_smith_movie_stats, mat_all_common_genres c
+where m.mid = c.mid;
+
+
+create materialized view mat_movie_fractions as
+select a.mid,actor_ratio, tag_ratio, genre_ratio, (1-(abs(cast(m.year as float)-smith_year)/greatest(m.year,smith_year))) AS age_gap, (1-(abs(m.rating-smith_rating)/greatest(m.rating,smith_rating))) AS rating_gap
+from mat_actor_fraction a, mat_tag_fraction t, mat_genre_fraction g,movies m, mat_smith_movie_stats sms
+where a.mid = t.mid and t.mid = g.mid and m.mid = a.mid and m.rating is not null;
+
+
+select m.title, m.rating, round((actor_ratio + tag_ratio + genre_ratio + age_gap + rating_gap)/5 * 100) as similarity
+from movies m, mat_movie_fractions mf
+where m.mid = mf.mid
+order by similarity desc limit 10;
+
+--Total query runtime: 58 msec.

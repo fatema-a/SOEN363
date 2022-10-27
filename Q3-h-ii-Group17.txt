@@ -1,0 +1,6 @@
+SELECT H.name
+FROM high_ratings H
+WHERE H.name NOT IN (SELECT name FROM low_ratings)
+
+execution time: 76ms
+fetching time: 12ms

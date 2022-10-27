@@ -1,0 +1,8 @@
+SELECT A.name, COUNT(*)
+FROM movies M, actors A
+WHERE M.mid = A.mid AND A.name IN (SELECT H.name
+                                   FROM high_ratings H
+                                   WHERE H.name NOT IN (SELECT name FROM low_ratings))
+GROUP BY A.name
+ORDER BY COUNT(*) desc
+LIMIT 10

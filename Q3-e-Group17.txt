@@ -6,7 +6,7 @@ where M.mid IN ((SELECT M1.mid
                                 FROM tags T1
                                 WHERE T1.tid IN (SELECT TN1.tid
                                                  FROM tag_names TN1
-                                                 WHERE TN1.tag = 'good')))
+                                                 WHERE TN1.tag LIKE '%good%')))
                INTERSECT
                (SELECT M2.mid
                FROM movies M2
@@ -14,7 +14,7 @@ where M.mid IN ((SELECT M1.mid
                                 FROM tags T2
                                 WHERE T2.tid IN (SELECT TN2.tid
                                                  FROM tag_names TN2
-                                                 WHERE TN2.tag = 'bad'))))
+                                                 WHERE TN2.tag LIKE '%bad%'))))
                                                  
 execution time: 11ms
 fetching time: 11ms

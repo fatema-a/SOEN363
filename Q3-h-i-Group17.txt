@@ -1,0 +1,13 @@
+CREATE VIEW high_ratings(name)
+AS SELECT DISTINCT A.name
+   FROM movies M, actors A
+   WHERE A.mid = M.mid AND M.rating >=4;
+   
+CREATE VIEW low_ratings(name)
+AS SELECT DISTINCT A.name
+   FROM movies M, actors A
+   WHERE A.mid = M.mid AND M.rating <4;
+   
+SELECT count(*) FROM high_ratings;
+SELECT count(*) FROM low_ratings;
+

@@ -1,0 +1,4 @@
+SELECT M1.mid, M1.title, M1.year, M1.num_ratings, M1.rating
+FROM movies M1
+WHERE M1.rating = (SELECT MIN(M2.rating)
+                   FROM movies M2)

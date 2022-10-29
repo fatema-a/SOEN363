@@ -1,0 +1,5 @@
+SELECT M1.mid, M1.title, M1.year, M1.num_ratings, M1.rating
+FROM movies M1
+WHERE M1.rating = (SELECT MAX(rating)
+                   FROM movies M2)
+ORDER BY M1.mid asc

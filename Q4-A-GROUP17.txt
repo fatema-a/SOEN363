@@ -1,0 +1,8 @@
+create index idx_actors_name
+on actors(name);
+
+create index idx_movies_title
+on movies(title);
+
+create index idx_movies_rating
+on movies(rating);

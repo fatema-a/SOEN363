@@ -1,0 +1,1 @@
+As the movies with the highest number of ratings don't appear among the highest rating or lowest rating, our hypothesis is false for the MovieLens database.

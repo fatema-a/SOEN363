@@ -16,5 +16,5 @@ where M.mid IN ((SELECT M1.mid
                                                  FROM tag_names TN2
                                                  WHERE TN2.tag LIKE '%bad%'))))
                                                  
-execution time: 11ms
-fetching time: 11ms
+/*execution time: 11ms
+fetching time: 11ms*/

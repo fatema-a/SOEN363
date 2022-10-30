@@ -8,3 +8,4 @@ GROUP BY name
 SELECT longevity.name
 FROM longevity 
 WHERE longevity.diff >= ALL(SELECT longevity.diff FROM longevity);
+--Total query runtime: 3 secs 712 msec.

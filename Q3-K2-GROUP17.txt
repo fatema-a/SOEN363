@@ -1,0 +1,15 @@
+CREATE VIEW mostpopular AS
+SELECT a1.name, count( DISTINCT a2.name) as coactors
+FROM actors a1, actors a2
+WHERE a1.mid = a2.mid
+AND a1.name <> a2.name
+GROUP BY a1.name
+ORDER BY coactors DESC;
+
+SELECT p.name, p.coactors
+FROM mostpopular p
+WHERE  p.coactors >= (SELECT max(p.coactors)
+        FROM mostpopular p);
+
+
+execution:41s

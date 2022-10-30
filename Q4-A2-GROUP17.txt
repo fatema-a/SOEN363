@@ -1,0 +1,15 @@
+CREATE MATERIALIZED VIEW mostpopular_mv AS
+SELECT a1.name, count( DISTINCT a2.name) as coactors
+FROM actors a1, actors a2
+WHERE a1.mid = a2.mid
+AND a1.name <> a2.name
+GROUP BY a1.name
+ORDER BY coactors DESC;
+
+SELECT m.name, m.coactors
+FROM mostpopular_mv m
+WHERE  m.coactors >= (SELECT max(m.coactors)
+        FROM mostpopular_mv m);
+
+
+execution:244ms

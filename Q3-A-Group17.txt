@@ -6,5 +6,5 @@ where mid in (select mid
 group by title
 order by title asc
 
-execution time 12ms
-fetching time 9ms
+/*execution time 12ms
+fetching time 9ms*/

@@ -5,3 +5,4 @@ create or replace view co_actors as
       and name not like 'Annette Nicole';
 
 select count(*) from co_actors;
+--Total query runtime: 245 msec.

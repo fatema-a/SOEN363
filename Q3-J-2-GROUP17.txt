@@ -3,3 +3,4 @@ create or replace view all_combinations as
     from co_actors, (select mid from actors where name like 'Annette Nicole') as am;
 
 select count(*) from all_combinations;
+--Total query runtime: 93 msec.

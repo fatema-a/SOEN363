@@ -1,1 +1,2 @@
 select * from co_actors except (select distinct name from non_existent);
+--Total query runtime: 966 msec.

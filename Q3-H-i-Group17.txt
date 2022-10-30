@@ -7,7 +7,14 @@ CREATE VIEW low_ratings(name)
 AS SELECT DISTINCT A.name
    FROM movies M, actors A
    WHERE A.mid = M.mid AND M.rating <4;
-   
+    
 SELECT count(*) FROM high_ratings;
+
+/*execution time: 9ms 
+fetching time: 9ms*/
+
 SELECT count(*) FROM low_ratings;
+
+/*execution time: 62ms 
+fetching time: 9ms*/
 

@@ -4,3 +4,4 @@ create or replace view non_existent as
     except (select name, mid from actors);
 
 select count(*) from non_existent;
+--Total query runtime: 86 msec.

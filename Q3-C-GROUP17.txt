@@ -1,0 +1,13 @@
+SELECT genre, count as numberOfMovies
+FROM (
+    SELECT genre, COUNT(movies.mid) as count
+    FROM movies, genres
+    WHERE movies.mid = genres.mid
+    GROUP BY genres.genre
+    ORDER BY count ASC
+) as gc
+WHERE gc.count > 1000;
+
+
+
+execution:16ms fetching:17ms

@@ -6,3 +6,6 @@ WHERE M.mid = A.mid AND A.name IN (SELECT H.name
 GROUP BY A.name
 ORDER BY COUNT(*) desc
 LIMIT 10
+
+/*execution time: 95ms
+fetching time: 11ms*/

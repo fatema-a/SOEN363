@@ -2,5 +2,5 @@ Select title, year, rating
 from movies
 order by year asc, rating desc
 
-execution time: 8ms
-fetching time: 30ms
+/*execution time: 8ms
+fetching time: 30ms*/

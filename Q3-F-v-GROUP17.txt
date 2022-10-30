@@ -7,3 +7,6 @@ INTERSECT
 FROM movies M1
 WHERE M1.num_ratings = (SELECT MAX(M2.num_ratings)
                    FROM movies M2))
+
+/*execution time: 7ms
+fetching time: 18ms*/

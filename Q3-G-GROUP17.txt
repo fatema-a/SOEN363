@@ -9,3 +9,4 @@ where m.year >= 2005
   and (m.rating = max_rating or m.rating = min_rating)
   and m.num_ratings != 0
 order by m.year
+--Total query runtime: 67 msec.
